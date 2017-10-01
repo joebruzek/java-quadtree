@@ -4,8 +4,8 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
     private static int LEAF_NODE_SIZE = 3;
     private int[] duplicateCount;
 
-    public LeafQuadNode(int minX, int maxX, int minY, int maxY) {
-        super(LEAF_NODE_SIZE, minX, maxX, minY, maxY);
+    public LeafQuadNode(QuadRange range) {
+        super(LEAF_NODE_SIZE, range);
         setType(NodeType.LEAF);
         duplicateCount = new int[LEAF_NODE_SIZE];
         Arrays.fill(duplicateCount, 0);
@@ -36,7 +36,7 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
 
     @Override
     public AbstractQuadNode split() {
-        InternalQuadNode newNode = new InternalQuadNode(getMinX(), getMaxX(), getMinY(), getMaxY());
+        InternalQuadNode newNode = new InternalQuadNode(getRange());
         for (int i = 0; i < getCount(); i++) {
             for (int j = 0; j < duplicateCount[i]; j++) {
                 newNode.insert(get(i));

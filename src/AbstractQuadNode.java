@@ -3,23 +3,17 @@ public abstract class AbstractQuadNode<T> {
     private T[] payload;
     private NodeType type;
     private int count = 0;
-    private int minX;
-    private int maxX;
-    private int minY;
-    private int maxY;
+    private QuadRange range;
 
     //abstract methods to be implemented by children
     public abstract AbstractQuadNode insert(Point value);
     public abstract AbstractQuadNode remove(Point value);
     public abstract AbstractQuadNode split();
 
-    public AbstractQuadNode(int capacity, int minX, int maxX, int minY, int maxY) {
+    public AbstractQuadNode(int capacity, QuadRange range) {
         this.capacity = capacity;
         this.payload = (T[])new Object[capacity];
-        this.minX = minX;
-        this.maxX = maxX;
-        this.minY = minY;
-        this.maxY = maxY;
+        this.range = range;
     }
 
     @Override
@@ -56,6 +50,14 @@ public abstract class AbstractQuadNode<T> {
         return -1;
     }
 
+    public QuadRange getRange() {
+        return range;
+    }
+
+    public void setRange(QuadRange range) {
+        this.range = range;
+    }
+
     public NodeType getType() {
         return type;
     }
@@ -70,38 +72,6 @@ public abstract class AbstractQuadNode<T> {
 
     public int getCount() {
         return count;
-    }
-
-    public int getMinX() {
-        return minX;
-    }
-
-    public void setMinX(int minX) {
-        this.minX = minX;
-    }
-
-    public int getMaxX() {
-        return maxX;
-    }
-
-    public void setMaxX(int maxX) {
-        this.maxX = maxX;
-    }
-
-    public int getMinY() {
-        return minY;
-    }
-
-    public void setMinY(int minY) {
-        this.minY = minY;
-    }
-
-    public int getMaxY() {
-        return maxY;
-    }
-
-    public void setMaxY(int maxY) {
-        this.maxY = maxY;
     }
 
     private void checkValidIndex(int index) {

@@ -1,8 +1,8 @@
 public class InternalQuadNode extends AbstractQuadNode<AbstractQuadNode> {
     private static int INTERNAL_NODE_SIZE = 4;
 
-    public InternalQuadNode(int minX, int maxX, int minY, int maxY) {
-        super(INTERNAL_NODE_SIZE, minX, maxX, minY, maxY);
+    public InternalQuadNode(QuadRange range) {
+        super(INTERNAL_NODE_SIZE, range);
         setType(NodeType.INTERNAL);
     }
 

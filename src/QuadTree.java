@@ -20,7 +20,7 @@ public class QuadTree {
      */
     public static LeafQuadNode flyweight() {
         if (flyweight == null) {
-            flyweight = new LeafQuadNode(0, 0, 0, 0);
+            flyweight = new LeafQuadNode(new QuadRange(0, 0, 0, 0));
             flyweight.setType(NodeType.FLYWEIGHT);
         }
         return flyweight;
@@ -32,7 +32,7 @@ public class QuadTree {
             throw new IndexOutOfBoundsException("Point " + value + " is outside the boundaries of the tree. Tree size is " + size);
         }
         if (root.equals(flyweight)) {
-            root = new LeafQuadNode(0, size, 0, size);
+            root = new LeafQuadNode(new QuadRange(0, size, 0, size));
         }
         root = root.insert(value);
     }
