@@ -10,14 +10,14 @@ public class InternalQuadNode extends AbstractQuadNode<AbstractQuadNode> {
 
         //fill the node with leafs
         for (int i = 0; i < INTERNAL_NODE_SIZE; i++) {
-            set(i, new LeafQuadNode(range.getSubrange(QuadRange.Direction.valueOf(i))));
+            set(i, new LeafQuadNode(range.getSubrange(Direction.valueOf(i))));
         }
         setCount(INTERNAL_NODE_SIZE);
     }
 
     @Override
     public AbstractQuadNode insert(Point value) {
-        QuadRange.Direction direction = getRange().getDirection(value);
+        Direction direction = getRange().getDirection(value);
         get(direction.val()).insert(value);
         return this;
     }

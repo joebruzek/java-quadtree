@@ -7,34 +7,6 @@ public class QuadRange {
     private int minY;
     private int maxY;
 
-    public enum Direction {
-        NORTHWEST(0),
-        NORTHEAST(1),
-        SOUTHWEST(2),
-        SOUTHEAST(3);
-
-        private final int value;
-        private static Map<Integer, Direction> map = new HashMap<>();
-
-        static {
-            for (Direction dir : Direction.values()) {
-                map.put(dir.value, dir);
-            }
-        }
-
-        Direction(int value) {
-            this.value = value;
-        }
-
-        public int val() {
-            return this.value;
-        }
-
-        public static Direction valueOf(int dirVal) {
-            return map.get(dirVal);
-        }
-    }
-
     public QuadRange(int minX, int maxX, int minY, int maxY) {
         this.minX = minX;
         this.maxX = maxX;
