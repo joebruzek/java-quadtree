@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class LeafQuadNode extends AbstractQuadNode<Point> {
     private static int LEAF_NODE_SIZE = 3;
@@ -24,7 +27,9 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
             add(value);
             duplicateCount[getCount() - 1]++;
         } else {
-            return split();
+            AbstractQuadNode newNode = split();
+            newNode.insert(value);
+            return newNode;
         }
         return this;
     }
@@ -43,6 +48,17 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
             }
         }
         return newNode;
+    }
+
+    @Override
+    public List<Point> getPoints() {
+        List<Point> nodeList = new ArrayList<>();
+        for (int i = 0; i < getCount(); i++) {
+            for (int j = 0; j < duplicateCount[i]; j++) {
+                nodeList.add(get(i));
+            }
+        }
+        return nodeList;
     }
 
     @Override

@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class QuadTree {
     private static LeafQuadNode flyweight = null;
@@ -49,8 +51,12 @@ public class QuadTree {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
-        sb.append(root.toString());
-        if (sb.indexOf(", ") > 0) {
+        List<Point> pointList = root.getPoints();
+        for (Point p : pointList) {
+            sb.append(p.toString());
+            sb.append(", ");
+        }
+        if (!pointList.isEmpty()) {
             sb.setLength(sb.length() - 2);
         }
         sb.append("}");

@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class QuadRange {
     private int minX;
     private int maxX;
@@ -5,10 +8,31 @@ public class QuadRange {
     private int maxY;
 
     public enum Direction {
-        NORTHWEST,
-        NORTHEAST,
-        SOUTHWEST,
-        SOUTHEAST
+        NORTHWEST(0),
+        NORTHEAST(1),
+        SOUTHWEST(2),
+        SOUTHEAST(3);
+
+        private final int value;
+        private static Map<Integer, Direction> map = new HashMap<>();
+
+        static {
+            for (Direction dir : Direction.values()) {
+                map.put(dir.value, dir);
+            }
+        }
+
+        Direction(int value) {
+            this.value = value;
+        }
+
+        public int val() {
+            return this.value;
+        }
+
+        public static Direction valueOf(int dirVal) {
+            return map.get(dirVal);
+        }
     }
 
     public QuadRange(int minX, int maxX, int minY, int maxY) {
@@ -18,6 +42,7 @@ public class QuadRange {
         this.maxY = maxY;
     }
 
+    // Get a new Quadrange representing a 1/4 subrange of this one
     public QuadRange getSubrange(Direction direction) {
         switch (direction) {
             case NORTHWEST:
@@ -30,6 +55,23 @@ public class QuadRange {
                 return new QuadRange(maxX / 2, maxX, maxY / 2, maxY);
         }
         return null;
+    }
+
+    // Get the internal quadrant of this range a point lies in
+    public Direction getDirection(Point pos) {
+        if (pos.getX() <= maxX / 2) {
+            if (pos.getY() <= maxY / 2) {
+                return Direction.NORTHWEST;
+            } else {
+                return Direction.SOUTHWEST;
+            }
+        } else {
+            if (pos.getY() <= maxY / 2) {
+                return Direction.NORTHEAST;
+            } else {
+                return Direction.SOUTHEAST;
+            }
+        }
     }
 
     public int getMinX() {

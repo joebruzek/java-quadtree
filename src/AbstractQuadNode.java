@@ -1,3 +1,6 @@
+import java.util.Collection;
+import java.util.List;
+
 public abstract class AbstractQuadNode<T> {
     private int capacity;
     private T[] payload;
@@ -9,6 +12,7 @@ public abstract class AbstractQuadNode<T> {
     public abstract AbstractQuadNode insert(Point value);
     public abstract AbstractQuadNode remove(Point value);
     public abstract AbstractQuadNode split();
+    public abstract List<Point> getPoints();
 
     public AbstractQuadNode(int capacity, QuadRange range) {
         this.capacity = capacity;
