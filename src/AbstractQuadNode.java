@@ -1,9 +1,9 @@
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractQuadNode<T> {
     private int capacity;
-    private T[] payload;
+    private ArrayList<T> payload;
     private NodeType type;
     private int count = 0;
     private QuadRange range;
@@ -13,10 +13,11 @@ public abstract class AbstractQuadNode<T> {
     public abstract AbstractQuadNode remove(Point value);
     public abstract AbstractQuadNode split();
     public abstract List<Point> getPoints();
+    public abstract int getNumPoints();
 
     public AbstractQuadNode(int capacity, QuadRange range) {
         this.capacity = capacity;
-        this.payload = (T[])new Object[capacity];
+        this.payload = new ArrayList<>();
         this.range = range;
     }
 
@@ -24,30 +25,19 @@ public abstract class AbstractQuadNode<T> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++) {
-            sb.append(get(i).toString());
+            sb.append(payload.get(i).toString());
             sb.append(", ");
         }
         return sb.toString();
     }
 
-    public void add(T value) {
-        set(count, value);
-        count++;
-    }
-
-    public T get(int index) {
-        checkValidIndex(index);
-        return payload[index];
-    }
-
-    public void set(int index, T value) {
-        checkValidIndex(index);
-        payload[index] = value;
+    public ArrayList<T> getPayload() {
+        return payload;
     }
 
     public int contains(T value) {
-        for (int i = 0; i < count; i++) {
-            if (payload[i].equals(value)) {
+        for (int i = 0; i < payload.size(); i++) {
+            if (payload.get(i).equals(value)) {
                 return i;
             }
         }
@@ -68,19 +58,5 @@ public abstract class AbstractQuadNode<T> {
 
     public void setType(NodeType type) {
         this.type = type;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    private void checkValidIndex(int index) {
-        if (index >= capacity || index < 0) {
-            throw new IndexOutOfBoundsException("Attempting to access index " + index + " of node with size " + capacity);
-        }
     }
 }

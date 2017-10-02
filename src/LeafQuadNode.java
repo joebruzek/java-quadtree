@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class LeafQuadNode extends AbstractQuadNode<Point> {
@@ -23,9 +22,9 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
             return this;
         }
 
-        if (getCount() < LEAF_NODE_SIZE) {
-            add(value);
-            duplicateCount[getCount() - 1]++;
+        if (getPayload().size() < LEAF_NODE_SIZE) {
+            getPayload().add(value);
+            duplicateCount[getPayload().size() - 1]++;
         } else {
             AbstractQuadNode newNode = split();
             newNode.insert(value);
@@ -36,15 +35,17 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
 
     @Override
     public AbstractQuadNode remove(Point value) {
+        //find the index of the point
+        //remove the point
         return this;
     }
 
     @Override
     public AbstractQuadNode split() {
         InternalQuadNode newNode = new InternalQuadNode(getRange());
-        for (int i = 0; i < getCount(); i++) {
+        for (int i = 0; i < getPayload().size(); i++) {
             for (int j = 0; j < duplicateCount[i]; j++) {
-                newNode.insert(get(i));
+                newNode.insert(getPayload().get(i));
             }
         }
         return newNode;
@@ -53,20 +54,25 @@ public class LeafQuadNode extends AbstractQuadNode<Point> {
     @Override
     public List<Point> getPoints() {
         List<Point> nodeList = new ArrayList<>();
-        for (int i = 0; i < getCount(); i++) {
+        for (int i = 0; i < getPayload().size(); i++) {
             for (int j = 0; j < duplicateCount[i]; j++) {
-                nodeList.add(get(i));
+                nodeList.add(getPayload().get(i));
             }
         }
         return nodeList;
     }
 
     @Override
+    public int getNumPoints() {
+        return Arrays.stream(duplicateCount).sum();
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < getCount(); i++) {
+        for (int i = 0; i < getPayload().size(); i++) {
             for (int j = 0; j < duplicateCount[i]; j++) {
-                sb.append(get(i).toString());
+                sb.append(getPayload().get(i).toString());
                 sb.append(", ");
             }
         }
